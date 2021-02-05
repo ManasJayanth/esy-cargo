@@ -1,26 +1,19 @@
 {
-  "//": "Keys that start with // are ignored",
-  "name": "esy-hello",
-  "version": "0.0.1000",
-  "// version": "See readme and docs on how to version packages",
-  "description": "hello packaged for esy",
-  "source": "https://github.com/esy/test-hello-c/archive/0.1.0.zip#sha256:e1bd9924eb5d97d99c9b87f9a4a95b734e111cd6dd01464358029c751d57d693",
+  "name": "esy-cargo",
+  "version": "0.50.0",
+  "description": "Cargo (rust) packaged for esy",
+  "source": "git+https://github.com/rust-lang/cargo.git#d00d64df9f803bf5bba8714ca498d8f9159d07f6",
   "override": {
+    "build": ["cargo build"],
     "buildEnv": {
-      "//": "Only for illustrative purpose. Not a real, useful package",
-      "PREFIX": "$cur__install",
-      "CC_PREFIX": "#{os == 'windows' ? 'x86_64-w64-mingw32-': '' }"
+      "RUSTC": "#{esy-rustc.install}/bin/rustc"
     },
-    "build": ["./configure", "make"],
-    "install": "make install",
+    "install": "cargo install --root #{self.install} --path .",
     "buildsInSource": true,
-    "exportedEnv": {
-      "//": "This is just an example",
-      "PKG_CONFIG_PATH": {
-        "val": "#{self.lib / 'pkgconfig'}",
-        "scope": "global"
-      }
-    },
-    "dependencies": {}
+    "exportedEnv": {},
+    "dependencies": {
+      "esy-rustc": "1.49.0",
+      "esy-cargobootstrap": "1.49.0"
+    }
   }
 }
